@@ -3,7 +3,7 @@ const PassportJwt = require('passport-jwt')
 const JWT = require('jsonwebtoken')
 const User = require('../models/user')
 
-const jwtSecret = 'doggo123' // Should come from ENV
+const jwtSecret = process.env.JWT_SECRET   // Should come from ENV
 const jwtAlgorithm = 'HS256'
 const jwtExpiresIn = '3h'
 
@@ -50,23 +50,23 @@ const isAdmin = (req, res, next) => {
 
 // Create a JWT (user just logged in or registered)
 const signJwtForUser = (req, res) => {
-    // Use JWT to create a signed token
-    const token = JWT.sign(
-      // Payload
-      {
-        sub: req.user._id.toString(),
-        email: req.user.email
-      },
-      // Secret
-      jwtSecret,
-      // Config (may include header values)
-      {
-        algorithm: jwtAlgorithm,
-        expiresIn: jwtExpiresIn
-      }
-    )
+  // Use JWT to create a signed token
+  const token = JWT.sign(
+    // Payload
+    {
+      sub: req.user._id.toString(),
+      email: req.user.email
+    },
+    // Secret
+    jwtSecret,
+    // Config (may include header values)
+    {
+      algorithm: jwtAlgorithm,
+      expiresIn: jwtExpiresIn
+    }
+  )
 
-    res.json({token: token})
+  res.json({ token: token })
 }
 
 module.exports = {

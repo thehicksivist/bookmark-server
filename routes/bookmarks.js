@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   Bookmark.find().then(
     bookmarks => res.json(bookmarks)
   ).catch(
-    error => res.status(500).json({ error: error.message })
+    error => res.sendStatus(500).json({ error: error.message })
   )
 })
 
@@ -18,16 +18,16 @@ router.post('/', (req, res) => {
   Bookmark.create(req.body).then(
     bookmark => res.send(bookmark)
   ).catch(
-    error => res.status(500).json({ error: error.message })
+    error => res.sendStatus(500).json({ error: error.message })
   )
 })
 
 // DELETE /bookmarks/:id (D)
 router.delete('/:id', (req, res) => {
   Bookmark.findByIdAndRemove(req.params.id).then(
-    () => res.send(204)
+    () => res.sendStatus(204)
   ).catch(
-    error => res.status(500).json({ error: error.message })
+    error => res.sendStatus(500).json({ error: error.message })
   )
 })
 
